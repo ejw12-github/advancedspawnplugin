@@ -1,0 +1,61 @@
+# SkChatFormat Skript Program
+#
+# Configure the chat format on Line 57
+# (I can't move this due to coding complications)
+# Available placeholders are %message% and %player%
+#
+# For help, contact @ejw12 on Discord! :)
+
+command /skchatformat:enable:
+	permission: skchatformat.enable
+	permission message: &a&lSkChatFormat &7| &fYou don't have permission!
+	usage: &a&lSkChatFormat &7| &fCorrect usage: &c/skchatformat:enable
+	trigger:
+		set {ChatFormat} to true
+		send "&a&lSkChatFormat &f| &7Enabled SkChatFormat"
+
+command /skchatformat:disable:
+	permission: skchatformat.disable
+	permission message: &a&lSkChatFormat &f| &7You don't have permission!
+	usage: &a&lSkChatFormat &f| &7Correct usage: &c/skchatformat:disable
+	trigger:
+		set {ChatFormat} to false
+		send "&a&lSkChatFormat &f| &7Disabled SkChatFormat"
+
+command /skchatformat:about:
+	usage: &a&lSkChatFormat &f| &7Correct usage: &c/skchatformat:about
+	trigger:
+		send "&a&lSkChatFormat &7&lAbout Page"
+		send ""
+		send "&7SkChatFormat is a simple chat format plugin by &aejw12&7, a Skript developer. Run &b/skchatformat:download&7 to download the Skript!"
+		send ""
+		send "&7 Need a tutorial? Do &b/skchatformat:help"
+		
+command /skchatformat:reload:
+	permission: skchatformat.reload
+	permission message: &a&lSkChatFormat &f| &7You don't have permission!
+	usage: &a&lSkChatFormat &f| &7Correct usage: &c/skchatformat:reload
+	trigger:
+		execute console command "/sk reload SkChatFormat.sk"
+		send "&a&lSkChatFormat &f| &7Reloaded SkChatFormat"
+
+command /skchatformat:help:
+	usage: &a&lSkChatFormat &f| &7Correct usage: &c/skchatformat:help
+	trigger:
+		send "&a&lSkChatFormat &7&lHelp Page"
+		send ""
+		send "&b/skchatformat:enable &7 - Enable SkChatFormat"
+		send "&b/skchatformat:disable &7 - Disable SkChatFormat"
+		send "&b/skchatformat:about &7 - Displays the about page."
+		send "&b/skchatformat:help &7 - Displays this menu."
+		send "&b/skchatformat:download &7 - Shows you the download menu."
+		send "&b/skchatformat:reload &7 - Reloads SkChatFormat."
+		
+on chat:
+	if {ChatFormat} is true:
+		cancel the event
+		broadcast "%player%: %message%"
+	if {ChatFormat} is false:
+		cancel the event
+		broadcast "<%player%> %message%"
+		
